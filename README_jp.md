@@ -177,7 +177,7 @@ cmakeを利用した一般的な手法でbuildします
 ## Developers Channel
 
 専用 Discord サーバー:
-[https://discord.gg/YtnWQyGRB6](https://discord.gg/YtnWQyGRB6)
+[https://discord.gg/9qxJNTPSPs](https://discord.gg/9qxJNTPSPs)
 
 ## Open Source
 
