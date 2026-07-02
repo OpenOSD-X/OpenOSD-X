@@ -190,7 +190,7 @@ Build using standard **cmake** procedures.
 ## Developer Channel
 
 Official Discord Server:
-[https://discord.gg/YtnWQyGRB6](https://discord.gg/YtnWQyGRB6)
+[https://discord.gg/9qxJNTPSPs](https://discord.gg/9qxJNTPSPs)
 
 ---
 
