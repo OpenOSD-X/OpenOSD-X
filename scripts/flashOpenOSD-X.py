@@ -289,6 +289,7 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument("hexfile", help="Path to the Intel HEX file to be flashed.")
+    parser.add_argument("-p", "--port", help="Serial port to use (e.g. COM19). Auto-detected if omitted.")
     parser.add_argument("-d", "--debug", action="store_true", help="Enable verbose debug logging.")
     args = parser.parse_args()
 
@@ -311,7 +312,7 @@ def main():
         sys.exit(1)
     
     # --- Step 2: Enable Betaflight Serial Passthrough (Custom hardware-specific step) ---
-    port = serials_find.get_serial_port()
+    port = args.port if args.port else serials_find.get_serial_port()
     try:
         SerialPassthrough.serialpassthrough_start(port)
         SerialPassthrough.bootloader_start(port)
