@@ -33,9 +33,15 @@ elseif("${TARGET}" STREQUAL "novtx")
 endif()
 
 option(USE_RTT "Enable SEGGER RTT support" OFF)
+option(INAV_FONT "Embed the 512-character INAV font" OFF)
 
 # Add options to select resolution mode
 option(RESOLUTION_HD "Build with HD resolution" OFF)
+
+if(INAV_FONT)
+    message(STATUS "INAV font enabled")
+    add_compile_definitions(INAV_FONT=1)
+endif()
 
 # Setup compiler settings
 set(CMAKE_C_STANDARD 11)
