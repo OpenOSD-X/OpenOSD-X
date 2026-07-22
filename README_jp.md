@@ -152,6 +152,7 @@ cmakeを利用した一般的な手法でbuildします
   ```
   $ cmake -DTARGET=novtx    vtx機能なし
   $ cmake -DRESOLUTION_HD=ON    HD版 　　
+  $ cmake -DINAV_FONT=ON    512文字のINAVフォントを埋め込む
   ```
 
 ##  flash memory map

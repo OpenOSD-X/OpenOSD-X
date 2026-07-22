@@ -558,7 +558,7 @@ void memset16(volatile uint16_t *dst, uint16_t data, uint16_t len16)
 }
 
 __attribute__((section (".ccmram_code"), optimize("O3")))
-void setVideoGenLine(register volatile uint16_t *ldata, uint8_t *buf, int line, register volatile uint16_t hpos, register volatile uint16_t len)
+void setVideoGenLine(register volatile uint16_t *ldata, uint16_t *buf, int line, register volatile uint16_t hpos, register volatile uint16_t len)
 {
     register volatile  uint8_t* fontp;
 
@@ -682,10 +682,10 @@ void videoGen1stData(uint16_t *buf, uint16_t size, uint16_t line)
     int32_t canvas_line = (int32_t)vg_vcanvas_count - canvas_v_offset_gen[setting()->videoFormat];
     if ( canvas_line >= 0 && canvas_line < canvas_v[setting()->videoFormat] ){
 #ifdef RESOLUTION_HD
-            setVideoGenLine(&buf[cnt], (uint8_t*)charCanvasGet(canvas_line/18), canvas_line % 18, 0, hpos2nd);
+            setVideoGenLine(&buf[cnt], charCanvasGet(canvas_line/18), canvas_line % 18, 0, hpos2nd);
 #else
             UNUSED(line);
-            setVideoGenLine(&buf[cnt], (uint8_t*)charCanvasGet((canvas_line>>1)/18), (canvas_line>>1) % 18, 0, hpos2nd);
+            setVideoGenLine(&buf[cnt], charCanvasGet((canvas_line>>1)/18), (canvas_line>>1) % 18, 0, hpos2nd);
 #endif
     }else{
         memset16(&buf[cnt], VG_GRY, hpos2nd);
@@ -701,10 +701,10 @@ void videoGen2ndData(uint16_t *buf, uint16_t size, uint16_t line)
     int32_t canvas_line = (int32_t)vg_vcanvas_count - canvas_v_offset_gen[setting()->videoFormat];
     if ( canvas_line >= 0 && canvas_line < canvas_v[setting()->videoFormat] ){
 #ifdef RESOLUTION_HD
-        setVideoGenLine(&buf[cnt], (uint8_t*)charCanvasGet(canvas_line/18), canvas_line % 18, hpos2nd, CANVAS_H_R - hpos2nd);
+        setVideoGenLine(&buf[cnt], charCanvasGet(canvas_line/18), canvas_line % 18, hpos2nd, CANVAS_H_R - hpos2nd);
 #else
         (void)line;
-        setVideoGenLine(&buf[cnt], (uint8_t*)charCanvasGet((canvas_line>>1)/18), (canvas_line>>1) % 18, hpos2nd, CANVAS_H_R - hpos2nd);
+        setVideoGenLine(&buf[cnt], charCanvasGet((canvas_line>>1)/18), (canvas_line>>1) % 18, hpos2nd, CANVAS_H_R - hpos2nd);
 #endif
         cnt += CANVAS_H_R - hpos2nd;
         memset16(&buf[cnt], VG_GRY, size - cnt);

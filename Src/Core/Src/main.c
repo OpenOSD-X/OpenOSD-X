@@ -231,7 +231,7 @@ void osd_enable(uint8_t en)
 }
 
 __attribute__((section (".ccmram_code"), optimize("O2")))
-void SetLine(register volatile uint32_t *data, register volatile uint8_t *buf, int line)
+void SetLine(register volatile uint32_t *data, register volatile uint16_t *buf, int line)
 {
     register volatile uint32_t *fp;
     int linex = line*3;
@@ -424,9 +424,9 @@ void osd_dma(DETECT_SYNC detect_sync)
 
     if ( next_line >= 0 && next_line < canvas_v[setting()->videoFormat] ){
         #ifdef RESOLUTION_HD
-            SetLine(&dataBuffer[(next_line>>1) & 0x1][CANVAS_H_OFFSET], (uint8_t*)charCanvasGet(next_line/18), next_line % 18);
+            SetLine(&dataBuffer[(next_line>>1) & 0x1][CANVAS_H_OFFSET], charCanvasGet(next_line/18), next_line % 18);
         #else
-            SetLine(&dataBuffer[(next_line>>1) & 0x1][CANVAS_H_OFFSET], (uint8_t*)charCanvasGet((next_line>>1)/18), (next_line>>1) % 18);
+            SetLine(&dataBuffer[(next_line>>1) & 0x1][CANVAS_H_OFFSET], charCanvasGet((next_line>>1)/18), (next_line>>1) % 18);
         #endif
     }
 
@@ -686,23 +686,23 @@ int main(void)
         charCanvasClear();
 
         sprintf(buf,"%s", "---VIDEO---");
-        charCanvasWrite(1,0, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(1,0,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"LINE........%d (%s)", (int)video_line_last, VIDEO_FORMAT_STR);
-        charCanvasWrite(2,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(2,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"SYNC-TH.....%04dMV (%d-%d)", (pluse_level_high+pluse_level_low)/2, pluse_level_low, pluse_level_high);
-        charCanvasWrite(3,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(3,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"%s", "---VTX---");
-        charCanvasWrite(4,0, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(4,0,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"FREQ........%04dMHZ", getVtxFreq());
-        charCanvasWrite(5,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(5,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"VPD.........%04dMV", getVpd());
-        charCanvasWrite(6,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(6,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"VPD-TARGET..%04dMV", getVpdTarget());
-        charCanvasWrite(7,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(7,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"VREF........%04dMV", getVref());
-        charCanvasWrite(8,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(8,1,  0, (uint8_t*)buf, strlen(buf));
         sprintf(buf,"TEMP.........%03ld\xe", getTemp());
-        charCanvasWrite(9,1, (uint8_t*)buf, strlen(buf));
+        charCanvasWrite(9,1,  0, (uint8_t*)buf, strlen(buf));
         charCanvasDraw();
     }
 #else

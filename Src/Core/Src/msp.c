@@ -403,8 +403,9 @@ void msp_process_message(void)
                 case MSP_DP_WRITE_STRING:
                     //DEBUG_PRINTF("MSP_WRITE_STRING:%c", msp_rx_message.buffer[ msp_rx_message.payload_offset +4 ]);
                     charCanvasWrite(
-                        msp_rx_message.buffer[ msp_rx_message.payload_offset +1], 
+                        msp_rx_message.buffer[ msp_rx_message.payload_offset +1],
                         msp_rx_message.buffer[ msp_rx_message.payload_offset +2 ],
+                        msp_rx_message.buffer[ msp_rx_message.payload_offset +3 ],
                         &msp_rx_message.buffer[ msp_rx_message.payload_offset +4 ],
                         msp_rx_message.data_size -4);
                     break;

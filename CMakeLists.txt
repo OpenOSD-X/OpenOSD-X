@@ -33,9 +33,15 @@ elseif("${TARGET}" STREQUAL "novtx")
 endif()
 
 option(USE_RTT "Enable SEGGER RTT support" OFF)
+option(INAV_FONT "Embed the 512-character INAV font" OFF)
 
 # Add options to select resolution mode
 option(RESOLUTION_HD "Build with HD resolution" OFF)
+
+if(INAV_FONT)
+    message(STATUS "INAV font enabled")
+    add_compile_definitions(INAV_FONT=1)
+endif()
 
 # Setup compiler settings
 set(CMAKE_C_STANDARD 11)
@@ -167,7 +173,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/scripts/string2hex.py 0x08004090 "${PRJ_VERSION}" 16 > ${HEXVERSION_FILE}
         COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}> ${BIN_FILE}
         COMMAND ${CMAKE_OBJCOPY} -Oihex --gap-fill=0xFF $<TARGET_FILE:${PROJECT_NAME}> ${HEXTM1_FILE}
-        COMMAND srec_cat ${HEXTM1_FILE} -Intel -crop 0x08004200 0x0801B000 -STM32 0x08004004 -generate 0x08004000 0x08004004 -constant-l-e 0x16E00 4 -output ${HEXTM2_FILE} -Intel
+        COMMAND srec_cat ${HEXTM1_FILE} -Intel -crop 0x08004200 0x08017000 -STM32 0x08004004 -generate 0x08004000 0x08004004 -constant-l-e 0x12E00 4 -output ${HEXTM2_FILE} -Intel
         COMMAND srec_cat ${HEXTM2_FILE} -Intel -crop 0x08004000 0x08004008 -output ${HEXSIZECRC_FILE} -Intel
         COMMAND srec_cat ${HEXSIZECRC_FILE} -Intel ${HEXBOARD_FILE} -Intel ${HEXVERSION_FILE} -Intel ${HEXTM1_FILE} -Intel -output ${HEX_FILE} -Intel
         COMMAND ${CMAKE_COMMAND} -E rm -f ${HEXTM1_FILE} ${HEXTM2_FILE} ${HEXSIZECRC_FILE} ${HEXBOARD_FILE} ${HEXVERSION_FILE}

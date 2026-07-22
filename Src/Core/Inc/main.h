@@ -127,8 +127,9 @@ extern int32_t canvas_v_offset[];
 extern VIDEO_FORMAT video_format;
 extern int32_t canvas_v[];
 #define FONT_SIZE   64
-extern uint8_t font[256][FONT_SIZE];
-void SetLine(register volatile uint32_t *data, register volatile uint8_t *buf, int line);
+#define FONT_CHARS  512
+extern uint8_t font[FONT_CHARS][FONT_SIZE];
+void SetLine(register volatile uint32_t *data, register volatile uint16_t *buf, int line);
 void rebootDfu(void);
 
 /* USER CODE END EC */

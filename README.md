@@ -162,6 +162,7 @@ Build using standard **cmake** procedures.
   ```bash
   $ cmake -DTARGET=novtx          # build without VTX feature
   $ cmake -DRESOLUTION_HD=ON      # build HD version
+  $ cmake -DINAV_FONT=ON          # embed the 512-character INAV font
   ```
 
 ## Flash Memory Map
